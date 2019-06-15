@@ -1,0 +1,191 @@
+jQuery(function($) {
+	jQuery(document).ready(function() {
+		var dom = $('body').attr('data-url');
+		if($('.infinito').length){ // Search infinito
+			$('.infinito').infinitescroll({
+				navSelector  : ".navinf",
+				nextSelector : ".next",
+				itemSelector : ".post-infinito",
+				loadingText  : "Cargando posts...", 
+				errorCallback: function(){
+					$('.nav_infinito').html('');
+					$('.click_load').css('display', 'none');
+				},
+			},function(arrayOfNewElems){
+				$('.click_load').css('display','inline-block');
+				var loader = $('#infscr-loading');
+				loader.remove();
+			});
+			$('.infinito').infinitescroll('unbind');
+			$('.click_load').click(function(){
+				$('.click_load').css('display', 'none');
+				$('.infinito').infinitescroll('retrieve');
+				return false;
+			});
+		}
+		
+		$('.toglecom').click(function(){
+			var mens = $(this).html();
+			if(mens == 'Mostrar Comentarios'){
+				$(this).html('Ocultar Comentarios');
+			}else{
+				$(this).html('Mostrar Comentarios');
+			}
+			$(this).next().toggle('fast','linear', function(){ set_offset() });
+		});
+		if($('.gallery-slider').length){
+			$(".owl-carousel").owlCarousel({
+				items : 1,
+				dots : false,
+				nav:  true,
+				loop: true
+			});
+			$('body').on('click touch', '.btn-gallery-zoom', function(e){
+				e.preventDefault();
+				var $body = $('body'),
+					$wrap = $(this).parent(),
+					owl = $wrap.children('.owl-carousel').first().data('owl.carousel');
+				if($body.hasClass('gallery-zoom')){
+					$body.removeClass('gallery-zoom');
+					$wrap.removeClass('fullscreen');
+					$('.back-to-top').css('z-index','9999');
+				}
+				else{
+					$body.addClass('gallery-zoom');
+					$wrap.addClass('fullscreen');
+					$('.back-to-top').css('z-index','1');
+				}
+				if(owl){
+					owl._invalidated.width = true;
+					owl.onResize();
+				}
+			});
+		}
+		/*	Scroll	*/
+		//Scroll Event
+		$( window ).scroll(function() {
+			var top = $(window).scrollTop();
+			var bot = $(window).height();
+			// Near Bottom
+			if((top+bot) > ($(document).height() - 2000)) {
+				if(!$('body').hasClass('loading')){
+				   $('body').addClass('loading');
+				   $('.load_more_unique').trigger('click');
+				}
+		   }
+		   // Change Link
+		   $('.changlink').each(function(i){
+				set_offset();
+				var of = $(this).attr('data-offset');
+				var h = $(this).attr('data-height')
+				if(!$(this).hasClass('current')){
+					var of = $(this).attr('data-offset');
+					var h = $(this).attr('data-height');
+					var url = $(this).attr('data-url');
+					var titulo = $(this).attr('data-titulo');
+
+					if (of >= (parseInt(top)-parseInt(h)) && of <= (parseInt(top)+10)) {
+						$('.changlink').removeClass('current');
+						$(this).addClass('current');
+						history.pushState({}, '', url);
+						document.title = titulo+' - Ecoosfera';
+						var urlg = url.replace(dom,'');
+						ga('send', 'pageview', {
+						  'page': urlg,
+						  'title': titulo
+						});
+					}
+				}
+			});
+		});
+		//
+		// Click Load New Post
+		$('.load_more_unique').click( function(){
+			if(related.length === 0){
+				$('.load_more_unique').html('No más posts');
+				setTimeout(function (){ $('.load_more_unique').remove(); }, 1300);
+			}else{
+				var pid = related.pop();
+				var t = $(this);
+				t.addClass('load');
+				var url_pi = dom+'/?p='+pid;
+				
+				$.post(url_pi,{})
+				.done(function(data){
+					data_get = $(data).find('#post-'+pid);
+					$('#wrap-sing').append(data_get[0]);
+					/*var url = dom+'/get-posts/';
+					jQuery.post(url,
+						{view_post:pid})
+					.done(function(data){});*/
+					t.removeClass('load');
+					var gal = $(data).find('.gallery');
+					console.log(gal[0]);
+					if(gal[0] != undefined){
+						Galleria.run('.galleryid-'+pid,{
+							responsive:true, height:0.7625,lightbox: true, thumbCrop: 'false',imageMargin : '25', maxScaleRatio : 1,
+						});	
+					}
+					if (typeof(FB) != 'undefined' && FB != null ) {
+						FB.XFBML.parse(data_get[0]);
+					}
+					if($('body').hasClass('loading')){
+						$('body').removeClass('loading');
+					}
+				});
+			}
+		});
+		//
+		$('#btn_sear_n').on('click', function(){
+			$('.header-search.new-custom').toggle();
+		});
+		fit_img();
+		
+		$('body').on('click', '.sha_btn', function(){
+			var url = $(this).attr('href');
+			window.open(url,'popUpWindow','height=500,width=500,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
+			return false;
+		});
+		
+	});
+});
+function loadAPI() {
+    var js = document.createElement('script');
+    js.src = 'https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v3.3&appId=283812931772584&autoLogAppEvents=1';
+    document.body.appendChild(js);
+}
+function iframe_yt_lazy() {
+var vidDefer = document.getElementsByTagName('iframe');
+	for (var i=0; i<vidDefer.length; i++) {
+		if(vidDefer[i].getAttribute('data-href')) {
+			vidDefer[i].setAttribute('src',vidDefer[i].getAttribute('data-href'));
+		} 
+	}
+}
+
+window.onload = function(){
+	var script = document.createElement('script');
+	script.type = 'text/javascript';
+	script.src = 'http://pagead2.googlesyndication.com/pagead/show_ads.js';
+	/*jQuery('body').appendChild(script);*/
+	if(jQuery('body').hasClass('single')){
+		loadAPI();  
+	}
+	if(jQuery('body').hasClass('single')){
+		iframe_yt_lazy();
+	}
+	
+}
+function set_offset(){
+	jQuery('.changlink').each(function(){
+		var itemOffset = Math.abs(jQuery(this).offset().top);
+		var h = Math.abs(jQuery(this).height());
+		jQuery(this).attr('data-offset',itemOffset);
+		jQuery(this).attr('data-height',h);
+	});
+}
+function fit_img(){
+	jQuery('.fwi').each( function(){
+		jQuery(this).parent().addClass('fwip');
+	});
+}
