@@ -11,7 +11,7 @@ paginaEcooRead <- read_html(paginaEcoosfera)
 print(paginaEcooRead)
 
 #Entrando a los links
-paginaEcooNodes <- html_nodes(paginaEcooRead, "a")
+paginaEcooNodes <- html_nodes(paginaEcooRead, "article > a")
 print(paginaEcooNodes)
 
 #Obteniendo links
