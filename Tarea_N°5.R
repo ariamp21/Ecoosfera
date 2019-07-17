@@ -76,4 +76,28 @@ print(ListaCompartidos)
   }
   
 }
+ 
+#############################################################
+############## CREANDO TABLAS ##############################
+############################################################
 
+#####Estan !!malos!! los intervalos de lista compartidos, tengo q encontrar una forma de sumar de 3 en 3 los compartidos y así usar
+#####el unlist ,supongo, en la parte de val1 con [1:10]
+  
+dfTemporalArte <- data.frame(categorias = ListaCategorias[1], links= unlist(ListaLinks[1:10]), val1 = ListaCompartidos[1:3])
+
+dfTemporalEvolucion <- data.frame(categorias = ListaCategorias[2], links= unlist(ListaLinks[11:20]), val1 = ListaCompartidos[31:33])
+
+dfTemporalGuia <- data.frame(categorias = ListaCategorias[3], links= unlist(ListaLinks[21:30]), val1 = ListaCompartidos[61:63])
+
+dfTemporalMA <- data.frame(categorias = ListaCategorias[4], links= unlist(ListaLinks[31:40]), val1 = ListaCompartidos[91:93])
+
+dfTemporalNoticias <- data.frame(categorias = ListaCategorias[5], links= unlist(ListaLinks[41:50]), val1 = ListaCompartidos[121:123])
+
+dfTemporalSci <- data.frame(categorias = ListaCategorias[6], links= unlist(ListaLinks[51:60]), val1 = ListaCompartidos[151:153])
+
+dfTemporalWell <- data.frame(categorias = ListaCategorias[7], links= unlist(ListaLinks[61:70]), val1 = ListaCompartidos[181:183])
+
+dfTemporalViajes <- data.frame(categorias = ListaCategorias[8], links= unlist(ListaLinks[71:80]), val1 = ListaCompartidos[211:213])
+
+dfTemporalCol <- data.frame(categorias = ListaCategorias[9], links= unlist(ListaLinks[81:90]), val1 = ListaCompartidos[241:243])
