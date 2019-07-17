@@ -1,3 +1,4 @@
+
 #Pagina Ecoosfera: "https://www.ecoosfera.com/"
 
 #install.packages("rvest")
@@ -47,6 +48,7 @@ for (i in paginaEcooA){
 # Links de las 10 noticias que presenta cada categoría
 # Compartidos de las noticias, respecto a Facebook, Twitter y Pinterest respectivamente
 
+ListaCategorias <- list()
 ListaLinks <- list()
 ListaCompartidos <- list()
 
@@ -55,22 +57,23 @@ for (i in paginaEcooA){
   CategoriaEcoo2 <- html_text(html_nodes(lecturaEcoo,".archive-title"))
   CategoriaEcoo2 <- gsub("\n","",CategoriaEcoo2)
   CategoriaEcoo2 <- gsub("\t","",CategoriaEcoo2)
-  print(CategoriaEcoo2)
+ListaCategorias <- c(ListaCategorias, (CategoriaEcoo2))
+print(ListaCategorias)
   NodesNoticias <- html_nodes(lecturaEcoo, ".entry-thumbnail")
   NodesNoticias2 <- html_nodes(NodesNoticias,".icon-link")
   LinksNoticias <- html_attr(NodesNoticias2, "href")
-  ListaLinks <- print(paste(list(LinksNoticias)))
-
+ListaLinks <- c(ListaLinks, (LinksNoticias))
+print(ListaLinks)
+  
   
   for (x in LinksNoticias){
     lecturaLinks <- read_html(x)
     Compartidos <- html_text(html_nodes(lecturaLinks, ".sha_box"))
     Compartidos <- as.numeric(gsub("Shares","",Compartidos))
     Compartidos <- as.numeric(Compartidos)
-    ListaCompartidos <- print(paste(list(Compartidos)))
-
+ListaCompartidos <- c(ListaCompartidos, (Compartidos))
+print(ListaCompartidos)
   }
   
 }
-
 
