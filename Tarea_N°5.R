@@ -37,6 +37,8 @@ for (i in paginaEcooA){
   TituloEcoo <- html_text(html_nodes(lecturaEcoo,".entry-header"))
   TituloEcoo <- gsub("\t","",TituloEcoo)
   TituloEcoo <- gsub("\n","",TituloEcoo)
+  TituloEcoo <- gsub("                                                           ","",TituloEcoo)
+  TituloEcoo <- gsub("       ","",TituloEcoo)
   print(TituloEcoo)
 }
 ###########################################################################
