@@ -54,18 +54,27 @@ ListaCategorias <- list()
 ListaLinks <- list()
 ListaCompartidos <- list()
 
+#Ejemplo usando DataFrame
+
+
 for (i in paginaEcooA){
+
+  
+  #crea dataframe
+  estadisticasRedesSociales <- data.frame()
+  
+  
   lecturaEcoo <- read_html(i)
   CategoriaEcoo2 <- html_text(html_nodes(lecturaEcoo,".archive-title"))
   CategoriaEcoo2 <- gsub("\n","",CategoriaEcoo2)
   CategoriaEcoo2 <- gsub("\t","",CategoriaEcoo2)
-ListaCategorias <- c(ListaCategorias, (CategoriaEcoo2))
-print(ListaCategorias)
+  ListaCategorias <- c(ListaCategorias, (CategoriaEcoo2))
+  print(ListaCategorias)
   NodesNoticias <- html_nodes(lecturaEcoo, ".entry-thumbnail")
   NodesNoticias2 <- html_nodes(NodesNoticias,".icon-link")
   LinksNoticias <- html_attr(NodesNoticias2, "href")
-ListaLinks <- c(ListaLinks, (LinksNoticias))
-print(ListaLinks)
+  #print(ListaLinks)
+
   
   
   for (x in LinksNoticias){
@@ -73,27 +82,48 @@ print(ListaLinks)
     Compartidos <- html_text(html_nodes(lecturaLinks, ".sha_box"))
     Compartidos <- as.numeric(gsub("Shares","",Compartidos))
     Compartidos <- as.numeric(Compartidos)
-ListaCompartidos <- c(ListaCompartidos, (Compartidos))
-print(ListaCompartidos)
-#for (shares in length(ListaCompartidos)){
-#if(ListaCompartidos[[1]]>=0){
-    #("")
-  #}else if (ListaCompartidos[[2]]>=0){
-    ("")
-  #}else if (ListaCompartidos[[3]]>=0){
-   # print(ListaCompartidos[[1]]+ListaCompartidos[[2]]+ListaCompartidos[[3]])
-  #}else{
-   # ("ERRORSHARES")
-  #}
-#}
+    
+    # se crea dataframe con los valores necesitados
+    dfTemporal <- data.frame(categoriaLink = i, Links = x, Fb = Compartidos[1], Tw = Compartidos[2], Pst = Compartidos[3])
+    dfTemporal$newColum <- (as.numeric(dfTemporal$Fb)+as.numeric(dfTemporal$Tw)+as.numeric(dfTemporal$Pst))
 
-#LO SUBO como comentario mejor -.-
-#SON 9 CATEGORÍAS, CADA UNA TIENE 10 LINKS (90 TOTAL) Y CADA LINK TIENE 3 COMPARTIDOS (FB, TW, PST) (270 COMPARTIDOS TOTAL), 
-#NECESITO SUMAR DE 3 EN 3 PARA QUE ME DEN LOS 90 COMPARTIDOS DE LOS 90 LINKS
-  
+    # Se mergean (unen) los valores en un DataFrame
+    estadisticasRedesSociales <- rbind(estadisticasRedesSociales,dfTemporal)
+    #print(Compartidos)
   }
+  print(paste("============= crea csv",CategoriaEcoo2,"============="))
+  write.csv(estadisticasRedesSociales,paste(CategoriaEcoo2,".csv",sep = ""))
   
 }
+
+  
+
+
+  
+  
+  
+
+
+  
+  
+  
+    
+    
+    
+    
+
+
+
+
+  
+  
+   
+   
+
+
+ 
+
+
  
 #############################################################
 ############## CREANDO TABLAS ##############################
