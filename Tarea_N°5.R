@@ -75,6 +75,22 @@ print(ListaLinks)
     Compartidos <- as.numeric(Compartidos)
 ListaCompartidos <- c(ListaCompartidos, (Compartidos))
 print(ListaCompartidos)
+#for (shares in length(ListaCompartidos)){
+#if(ListaCompartidos[[1]]>=0){
+    #("")
+  #}else if (ListaCompartidos[[2]]>=0){
+    ("")
+  #}else if (ListaCompartidos[[3]]>=0){
+   # print(ListaCompartidos[[1]]+ListaCompartidos[[2]]+ListaCompartidos[[3]])
+  #}else{
+   # ("ERRORSHARES")
+  #}
+#}
+
+#LO SUBO como comentario mejor -.-
+#SON 9 CATEGORÍAS, CADA UNA TIENE 10 LINKS (90 TOTAL) Y CADA LINK TIENE 3 COMPARTIDOS (FB, TW, PST) (270 COMPARTIDOS TOTAL), 
+#NECESITO SUMAR DE 3 EN 3 PARA QUE ME DEN LOS 90 COMPARTIDOS DE LOS 90 LINKS
+  
   }
   
 }
