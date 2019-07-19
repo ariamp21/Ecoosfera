@@ -86,6 +86,7 @@ for (i in paginaEcooA){
     print(Compartidos)
     
   }
+  # Se guarda en csv para no perder la informacion de cada categoria
   print(paste("============= crea csv",CategoriaEcoo2,"============="))
   write.csv(estRRSS,paste(CategoriaEcoo2,".csv",sep = ""))
   
