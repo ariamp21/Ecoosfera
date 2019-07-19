@@ -98,9 +98,8 @@ for (i in paginaEcooA){
 # El orden es el siguiente
 # 1. Se creó un data frame vacio para luego meter la informacion necesaria de cada categoria
 # 2. Se realizo data frame por separado segun los 10 links por categoria que ofrece la pagina
-# 3. Se fueron adjuntando todas las tablas en un data frame final
-# 4. Luego se adjunto la tabla estRRSS la cual contiene los compartidos de cada categoria por RRSS
-# 5. Se realiza una ultima data frame para poner solo los resultados totales de los compartidos por categoria
+# 3. Luego se adjunto la tabla estRRSS la cual contiene los compartidos de cada categoria por RRSS
+# 4. Finalmente se unieron todos los datos respecto a los 90 links.
 
 dfFinal <- data.frame()
 dfArte <- data.frame(links= unlist(ListaLinks[1:10]))
