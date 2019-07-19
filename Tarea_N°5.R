@@ -207,7 +207,7 @@ hist(dfFinal$Tw, main="Noticias compartidas en Twitter", ylab="Frecuencia en lin
 #Se aprecia que generalmente hay 5000 compartidos en casi la totalidad de los links, al igual que facebook.
 
 hist(dfFinal$Pst, main="Noticias compartidas en Pinterest", ylab="Frecuencia en links",xlab="Compartidos")
-#La cantidad que generalmente se comparte son de 2500 salvo por algunas que ocasionan revuelo y llegan hasta
+#La cantidad que generalmente se comparte son de 25000 salvo por algunas que ocasionan revuelo y llegan hasta
 #200.000 compartidos
 
 #Existen varios saltos entre los datos, lo cual no permite una distribucion normal, ademas de presentar
