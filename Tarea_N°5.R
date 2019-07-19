@@ -147,6 +147,17 @@ summary(dfFinal)
 #3rd Qu.: 1896.0   3rd Qu.:  843.2   3rd Qu.:  2674.8   3rd Qu.:  9068.5  
 #Max.   :27493.0   Max.   :36421.0   Max.   :188644.0   Max.   :192203.0  
 
+sd(dfFinal$Fb)
+# 4941.315
+
+sd(dfFinal$Tw)
+# 7350.088
+
+sd(dfFinal$Pst)
+#  21185.24
+
+sd(dfFinal$SumaCompartidos)
+# 23287.89
 
 #Desglose de los datos
 #En Facebook la noticia que menos compartidos tuvo fue https://ecoosfera.com/arte-consciente-denuncia-la-emergencia-climatica-olafur-eliasson-in-real-life/
@@ -189,7 +200,7 @@ summary(dfFinal)
 
 hist(dfFinal$Fb, main="Noticias compartidas en Facebook", ylab="Frecuencia en links",xlab="Compartidos")
 
-#Podemos notar que casi 80 de los links de Facebook se comparten generalmente hasta 5000 veces.
+#Podemos notar que la moda de los links de Facebook muestra que se comparten generalmente hasta 5000 veces.
 
 hist(dfFinal$Tw, main="Noticias compartidas en Twitter", ylab="Frecuencia en links",xlab="Compartidos")
 
@@ -199,6 +210,8 @@ hist(dfFinal$Pst, main="Noticias compartidas en Pinterest", ylab="Frecuencia en 
 #La cantidad que generalmente se comparte son de 2500 salvo por algunas que ocasionan revuelo y llegan hasta
 #200.000 compartidos
 
+#Existen varios saltos entre los datos, lo cual no permite una distribucion normal, ademas de presentar
+#altisimos niveles de dispersion, denotados por la desviacion estandar presentada.
 
 
 ########FIN########
