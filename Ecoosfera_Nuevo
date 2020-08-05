@@ -31,7 +31,8 @@ print(paginaEcooA)
 #1. Link de la categoria
 #2. Nombre de la categoria a estudiar
 #3. Titulos de las noticias que presenta cada categoria
-#4. ESPERO Link de cada noticia
+#4. Link de cada noticia
+#5. Cantidad de compartidos
 
 ListaCategorias <- list()
 ListaTitulos <- list()
