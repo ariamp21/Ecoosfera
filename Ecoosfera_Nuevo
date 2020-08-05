@@ -1,0 +1,73 @@
+#Pagina Ecoosfera: "https://www.ecoosfera.com/"
+
+#install.packages("rvest")
+#install.packages("xml2")
+install.packages("ggplot2")
+
+library('rvest')
+library('ggplot2')
+
+#Guardando la pagina
+paginaEcoosfera <- "https://www.ecoosfera.com/"
+
+#Leyendo el codigo de ecoosfera
+paginaEcooRead <- read_html(paginaEcoosfera)
+print(paginaEcooRead)
+
+#Entrando a los links
+paginaEcooNodes <- html_nodes(paginaEcooRead, "#menu-neo2")
+paginaEcooNodes <- html_nodes(paginaEcooNodes, "a")
+print(paginaEcooNodes)
+
+#Obteniendo links
+paginaEcooA <- html_attr(paginaEcooNodes, "href")
+print(paginaEcooA)
+
+########################################################################
+###############EXTRACCION DE LA INFORMACION A CONTENER##################
+########################################################################
+
+#El orden de los print, es el siguiente:
+#1. Link de la categoria
+#2. Nombre de la categoria a estudiar
+#3. Titulos de las noticias que presenta cada categoria
+#4. ESPERO Link de cada noticia
+
+ListaCategorias <- list()
+ListaTitulos <- list()
+ListaLinks <- list()
+ListaCompartidos <- list()
+
+for (i in paginaEcooA){
+  print(i)
+  
+  lecturaEcoo <- read_html(i)
+  CategoriaEcoo <- html_text(html_nodes(lecturaEcoo,"h1"))
+  ListaCategorias <- c(ListaCategorias, CategoriaEcoo)
+  print(CategoriaEcoo)
+  
+  TituloEcoo <- html_text(html_nodes(lecturaEcoo,".entry-header"))
+  TituloEcoo <- gsub("\t","",TituloEcoo)
+  TituloEcoo <- gsub("\n","",TituloEcoo)
+  TituloEcoo <- gsub("                                                           ","",TituloEcoo)
+  TituloEcoo <- gsub("       ","",TituloEcoo)
+  ListaTitulos <- c(ListaTitulos, TituloEcoo)
+  print(TituloEcoo)
+    
+  NodesNoticias <- html_nodes(lecturaEcoo, ".entry-header")
+  NodesNoticias2 <- html_nodes(NodesNoticias,".post-title")
+  LinksNoticias <- html_nodes(NodesNoticias2, "a")
+  LinksNoticias2 <- html_attr(LinksNoticias, "href")
+  ListaLinks <- c(ListaLinks, (LinksNoticias2))
+  print(ListaLinks)
+  
+
+  for (x in LinksNoticias2){
+    lecturaLinks <- read_html(x)
+    Compartidos <- html_text(html_nodes(lecturaLinks, ".share_count"))
+    Compartidos <- as.numeric(Compartidos)
+    ListaCompartidos <- c(ListaCompartidos, Compartidos)
+    print(Compartidos)
+  }
+  
+  }
