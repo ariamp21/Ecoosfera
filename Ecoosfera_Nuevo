@@ -109,7 +109,6 @@ dfFinal %>%
   select(Compartidos)%>%
 boxplot(Compartidos,
         main = "Cantidad de compartidos por categoría",
-        #sub = "Filtrado por peso relativo mayor a 0.2",
         xlab = "Sci-Innovación",
         ylab = "Compartidos",
         col = rainbow(6, alpha=0.2),
