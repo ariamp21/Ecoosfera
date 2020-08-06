@@ -1,11 +1,13 @@
 #Pagina Ecoosfera: "https://www.ecoosfera.com/"
 
-#install.packages("rvest")
-#install.packages("xml2")
+install.packages("rvest")
+install.packages("xml2")
 install.packages("ggplot2")
 
 library('rvest')
+library("xml2")
 library('ggplot2')
+library(tidyverse)
 
 #Guardando la pagina
 paginaEcoosfera <- "https://www.ecoosfera.com/"
@@ -32,7 +34,7 @@ print(paginaEcooA)
 #2. Nombre de la categoria a estudiar
 #3. Titulos de las noticias que presenta cada categoria
 #4. Link de cada noticia
-#5. Cantidad de compartidos
+#5. Cantidad total de compartidos para cada noticia
 
 ListaCategorias <- list()
 ListaTitulos <- list()
@@ -60,7 +62,7 @@ for (i in paginaEcooA){
   LinksNoticias <- html_nodes(NodesNoticias2, "a")
   LinksNoticias2 <- html_attr(LinksNoticias, "href")
   ListaLinks <- c(ListaLinks, (LinksNoticias2))
-  print(ListaLinks)
+  print(LinksNoticias2)
   
 
   for (x in LinksNoticias2){
@@ -72,3 +74,12 @@ for (i in paginaEcooA){
   }
   
   }
+
+########################
+#####TABLA FINAL########
+########################
+
+dfFinal <- data.frame(Categoria = unlist(ListaCategorias), Titulo = unlist(ListaTitulos), Link = unlist(ListaLinks), Compartidos = unlist(ListaCompartidos))%>%
+  arrange(Categoria)
+
+write.csv(dfFinal, file = "TablaFinalCompartidos.csv")
