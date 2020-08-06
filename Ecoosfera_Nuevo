@@ -96,10 +96,12 @@ ggplot(dfFinal,
   geom_point() +
   theme_bw()
 
+
 ggplot(dfFinal) +
   geom_bar(mapping = aes(x = Categoria, y = Compartidos, fill = Categoria), stat = "identity") +
   theme_minimal() +
   ggtitle("Compartidos por categoría")+
+  guides(fill=FALSE)+
   coord_flip()
 
 dfFinal %>%
@@ -113,3 +115,16 @@ boxplot(Compartidos,
         col = rainbow(6, alpha=0.2),
         border = rainbow(6, v=0.6))
 
+dfFinal %>%
+  filter(Categoria == "Sci-Innovación")%>%
+  select(Titulo, Compartidos)%>%
+  ggplot(mapping = aes( x = Titulo, y = Compartidos, fill= Titulo))+
+  geom_bar(stat = "identity")+
+  guides(fill=FALSE)+
+  theme_bw()+
+  coord_flip()
+
+#Darle una vuelta a este grafo
+dfFinal%>%
+  filter(Categoria == "Arte")%>%
+ggplot( aes(Compartidos)) + geom_line(stat="density")
